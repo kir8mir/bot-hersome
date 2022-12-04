@@ -55,7 +55,7 @@ app.post('/new-message', async (req, res) => {
   } else if (/\d\d\.\d\d/.test(messageText)) {
     responseText =
       dataFromSpreadsheet[messageText] || 'You have nothing to do on this day.'
-  }  else if (messageText === 'give') {
+  } else if (messageText === 'give') {
     responseText =
       dataFromSpreadsheet[messageText] || 'TEST TEST TEST'
   }
