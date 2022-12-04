@@ -31,7 +31,6 @@ app.post('/new-message', async (req, res) => {
     return res.sendStatus(400)
   }
 
-
   await doc.loadInfo()
   const sheet = doc.sheetsByIndex[0]
   const rows = await sheet.getRows()
@@ -65,6 +64,12 @@ app.post('/new-message', async (req, res) => {
       chat_id: chatId,
       text: responseText
     })
+
+    setTimeout(await axios.post(TELEGRAM_URI, {
+      chat_id: chatId,
+      text: "Every 15 seconds"
+    }), 15000)
+
     res.send('Done')
   } catch (e) {
     console.log(e)
