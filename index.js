@@ -64,6 +64,8 @@ app.post('/new-message', async (req, res) => {
   } else if (messageText === 'give') {
     responseText =
       dataFromSpreadsheet[messageText] || 'TEST TEST TEST'
+  } else if (messageText === 'мамка') {
+    responseText ='Мамка звонила'
   }
 
   try {
