@@ -33,10 +33,10 @@ app.post('/new-message', async (req, res) => {
     return res.sendStatus(400)
   }
 
-  setTimeout(await axios.post(TELEGRAM_URI, {
-    chat_id: chatId,
-    text: "Every 15 seconds"
-  }), 15000)
+  // setTimeout(await axios.post(TELEGRAM_URI, {
+  //   chat_id: chatId,
+  //   text: "Every 15 seconds"
+  // }), 15000)
 
   await doc.loadInfo()
   const sheet = doc.sheetsByIndex[0]
