@@ -55,6 +55,9 @@ app.post('/new-message', async (req, res) => {
   } else if (/\d\d\.\d\d/.test(messageText)) {
     responseText =
       dataFromSpreadsheet[messageText] || 'You have nothing to do on this day.'
+  } else if (messageText === 'give') {
+    responseText =
+      dataFromSpreadsheet[messageText] || 'TEST TEST TEST'
   }
 
   try {
@@ -67,9 +70,4 @@ app.post('/new-message', async (req, res) => {
     console.log(e)
     res.send(e)
   }
-})
-
-const PORT = process.env.PORT || 3000
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
 })
