@@ -22,15 +22,21 @@ await doc.useServiceAccountAuth({
   private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n')
 })
 
+let chatId;
+
 app.post('/new-message', async (req, res) => {
   const { message } = req.body
 
   const messageText = message?.text?.toLowerCase()?.trim()
-  const chatId = message?.chat?.id
+  chatId = message?.chat?.id
   if (!messageText || !chatId) {
     return res.sendStatus(400)
   }
 
+  setTimeout(await axios.post(TELEGRAM_URI, {
+    chat_id: chatId,
+    text: "Every 15 seconds"
+  }), 15000)
 
   await doc.loadInfo()
   const sheet = doc.sheetsByIndex[0]
@@ -55,6 +61,9 @@ app.post('/new-message', async (req, res) => {
   } else if (/\d\d\.\d\d/.test(messageText)) {
     responseText =
       dataFromSpreadsheet[messageText] || 'You have nothing to do on this day.'
+  } else if (messageText === 'give') {
+    responseText =
+      dataFromSpreadsheet[messageText] || 'TEST TEST TEST'
   }
 
   try {
@@ -62,6 +71,7 @@ app.post('/new-message', async (req, res) => {
       chat_id: chatId,
       text: responseText
     })
+
     res.send('Done')
   } catch (e) {
     console.log(e)
